@@ -1,12 +1,12 @@
-const { Student } = require('../models');
+const { User } = require('../models');
 
-class StudentController {
-  static async getAllStudents(req, res) {
+class UserController {
+  static async getAllUsers(req, res) {
     //
     try {
-      let students = await Student.findAll();
+      let users = await User.findAll();
 
-      res.status(200).json(students);
+      res.status(200).json(users);
     } catch (err) {
       res.status(500).json(err);
     }
@@ -15,7 +15,7 @@ class StudentController {
     //
     try {
       const { email, password } = req.body;
-      let result = await Student.create({
+      let result = await User.create({
         email,
         password,
       });
@@ -30,13 +30,13 @@ class StudentController {
     try {
       const { email, password } = req.body;
 
-      let studentFound = await Student.findOne({
+      let userFound = await User.findOne({
         where: { email },
       });
-      // console.log(StudentFound);
-      if (studentFound) {
-        if (studentFound.password === password) {
-          res.status(200).json(studentFound);
+      // console.log(userFound);
+      if (userFound) {
+        if (userFound.password === password) {
+          res.status(200).json(userFound);
         } else {
           res.status(400).json({
             message: 'Invalid password',
@@ -44,21 +44,21 @@ class StudentController {
         }
       } else {
         res.status(404).json({
-          message: 'Student not found',
+          message: 'user not found',
         });
       }
     } catch (err) {
       res.status(500).json(err);
     }
   }
-  static async getStudentById(req, res) {
+  static async getUserById(req, res) {
     //
     try {
-      const id = +req.params.studentId;
-      let result = await Student.findByPk(id);
+      const id = +req.params.userId;
+      let result = await User.findByPk(id);
 
       if (result) res.status(200).json(result);
-      else res.status(404).json({ message: 'Student not found' });
+      else res.status(404).json({ message: 'User not found' });
     } catch (err) {
       res.status(500).json(err);
     }
@@ -66,13 +66,13 @@ class StudentController {
   static async delete(req, res) {
     //
     try {
-      const id = +req.params.studentId;
+      const id = +req.params.userId;
 
-      let result = await Student.destroy({
+      let result = await User.destroy({
         where: { id },
       });
 
-      result ? res.status(200).json({ message: 'Student deleted.' }) : res.status(400).json({ message: 'Student not delete' });
+      result ? res.status(200).json({ message: 'User deleted.' }) : res.status(400).json({ message: 'User not delete' });
     } catch (err) {
       res.status(500).json(err);
     }
@@ -81,9 +81,9 @@ class StudentController {
     //
     try {
       const { username, email, password, image, role } = req.body;
-      const id = +req.params.studentId;
+      const id = +req.params.userId;
 
-      let result = await Student.update(
+      let result = await User.update(
         {
           username,
           email,
@@ -96,11 +96,11 @@ class StudentController {
         }
       );
 
-      result[0] === 1 ? res.status(200).json({ message: 'Student updated' }) : res.status(400).json({ message: 'Student not updated' });
+      result[0] === 1 ? res.status(200).json({ message: 'User updated' }) : res.status(400).json({ message: 'User not updated' });
     } catch (err) {
       res.status(500).json(err);
     }
   }
 }
 
-module.exports = StudentController;
+module.exports = UserController;

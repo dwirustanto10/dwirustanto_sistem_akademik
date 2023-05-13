@@ -7,10 +7,10 @@ route.get('/', (req, res) => {
   });
 });
 
-const studentRoutes = require('./student');
-const academicRoutes = require('./academic');
+const userRoutes = require('./user');
+const subjectRoutes = require('./subject');
 
-route.use('/students', studentRoutes);
-route.use('/academics', academicRoutes);
+route.use('/users', userRoutes);
+route.use('/subjects', subjectRoutes);
 
 module.exports = route;

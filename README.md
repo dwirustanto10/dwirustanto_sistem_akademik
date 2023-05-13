@@ -18,5 +18,15 @@ npx sequelize-cli init
 4. membuat migration dan table
 
 ...
-npx sequelize-cli model:generate --name User
---attributes username:string, password:string, email:string, image: string
+npx sequelize-cli model:generate --name Student
+--attributes username:string, password:string, email:string, image: string, role:string
+
+npx sequelize-cli model:generate --name Academic --attributes nim:string,category:string,price:integer,stock:integer,image:string,UserId:integer
+
+```
+
+5. Migrate dari migrations
+
+```
+
+npx sequelize-cli db:migrate
