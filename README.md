@@ -1,2 +1,1 @@
-# dwirustanto_sistem_akademik
- 
+# vincent-inventory-management
