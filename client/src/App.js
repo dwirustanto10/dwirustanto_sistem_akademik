@@ -1,24 +1,31 @@
-import logo from './logo.svg';
-import './App.css';
+import React, { useState, useEffect } from "react";
+import "bootstrap/dist/css/bootstrap.css";
+import "bootstrap/dist/js/bootstrap.js";
+import "./App.css";
+import { BrowserRouter, Routes, Route } from "react-router-dom";
+
+// Components
+import Banner from "./components/Banner";
+import MenuBar from "./components/MenuBar";
+import MainContent from "./components/MainContent";
+
+import Login from "./pages/Login";
 
 function App() {
+  const [isLoggedIn, setIsLoggedIn] = useState(false);
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <BrowserRouter>
+      {isLoggedIn ? (
+        <div className="container-fluid">
+          <Banner />
+          <MenuBar />
+          <MainContent />
+        </div>
+      ) : (
+        <Login />
+      )}
+    </BrowserRouter>
   );
 }
 

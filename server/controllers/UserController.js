@@ -1,4 +1,6 @@
-const { User } = require('../models');
+const { User } = require("../models");
+const { decryptPwd } = require("../helpers/bcrypt");
+const { tokenGenerator } = require("../helpers/jsonwebtoken");
 
 class UserController {
   static async getAllUsers(req, res) {
@@ -35,16 +37,18 @@ class UserController {
       });
       // console.log(userFound);
       if (userFound) {
-        if (userFound.password === password) {
-          res.status(200).json(userFound);
+        if (decryptPwd(password, userFound.password)) {
+          // access token
+          const access_token = tokenGenerator(userFound);
+          res.status(200).json({ access_token });
         } else {
           res.status(400).json({
-            message: 'Invalid password',
+            message: "Invalid password",
           });
         }
       } else {
         res.status(404).json({
-          message: 'user not found',
+          message: "user not found",
         });
       }
     } catch (err) {
@@ -58,7 +62,7 @@ class UserController {
       let result = await User.findByPk(id);
 
       if (result) res.status(200).json(result);
-      else res.status(404).json({ message: 'User not found' });
+      else res.status(404).json({ message: "User not found" });
     } catch (err) {
       res.status(500).json(err);
     }
@@ -72,7 +76,9 @@ class UserController {
         where: { id },
       });
 
-      result ? res.status(200).json({ message: 'User deleted.' }) : res.status(400).json({ message: 'User not delete' });
+      result
+        ? res.status(200).json({ message: "User deleted." })
+        : res.status(400).json({ message: "User not delete" });
     } catch (err) {
       res.status(500).json(err);
     }
@@ -96,7 +102,9 @@ class UserController {
         }
       );
 
-      result[0] === 1 ? res.status(200).json({ message: 'User updated' }) : res.status(400).json({ message: 'User not updated' });
+      result[0] === 1
+        ? res.status(200).json({ message: "User updated" })
+        : res.status(400).json({ message: "User not updated" });
     } catch (err) {
       res.status(500).json(err);
     }

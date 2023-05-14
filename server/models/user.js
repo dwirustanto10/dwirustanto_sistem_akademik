@@ -1,5 +1,6 @@
-'use strict';
-const { Model } = require('sequelize');
+"use strict";
+const { encryptPwd } = require("../helpers/bcrypt");
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
   class User extends Model {
     /**
@@ -9,7 +10,7 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      User.hasMany(models.Subject);
+      User.hasMany(models.Item);
     }
   }
   User.init(
@@ -23,11 +24,15 @@ module.exports = (sequelize, DataTypes) => {
     {
       hooks: {
         beforeCreate(user, options) {
-          user.image = 'https://via.placeholder.com/150';
+          user.image =
+            "https://static.vecteezy.com/system/resources/thumbnails/000/439/863/small/Basic_Ui__28186_29.jpg";
+
+          // user.image = "https://via.placeholder.com/150";
+          user.password = encryptPwd(user.password);
         },
       },
       sequelize,
-      modelName: 'User',
+      modelName: "User",
     }
   );
   return User;

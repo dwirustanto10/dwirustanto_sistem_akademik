@@ -1,7 +1,7 @@
-'use strict';
-const { Model } = require('sequelize');
+"use strict";
+const { Model } = require("sequelize");
 module.exports = (sequelize, DataTypes) => {
-  class Subject extends Model {
+  class Item extends Model {
     /**
      * Helper method for defining associations.
      * This method is not a part of Sequelize lifecycle.
@@ -9,46 +9,46 @@ module.exports = (sequelize, DataTypes) => {
      */
     static associate(models) {
       // define association here
-      Subject.belongsTo(models.User);
+      Item.belongsTo(models.User);
     }
   }
-  Subject.init(
+  Item.init(
     {
-      semester: {
+      name: {
         type: DataTypes.STRING,
         validate: {
           notEmpty: {
-            message: 'Name cannot be null',
+            message: "Name cannot be null",
           },
         },
       },
-      ipk: {
+      category: {
         type: DataTypes.STRING,
         validate: {
           notEmpty: {
-            message: 'Category cannot be null',
+            message: "Category cannot be null",
           },
         },
       },
-      sks: {
+      price: {
         type: DataTypes.STRING,
         validate: {
           notEmpty: {
-            message: 'sks cannot be null',
+            message: "Price cannot be null",
           },
           isNumeric: {
-            message: 'sks must be a number.',
+            message: "Price must be a number.",
           },
         },
       },
-      status: {
+      stock: {
         type: DataTypes.STRING,
         validate: {
           notEmpty: {
-            message: 'dosen cannot be null',
+            message: "Stock cannot be null",
           },
           isNumeric: {
-            message: 'Stock must be a number.',
+            message: "Stock must be a number.",
           },
         },
       },
@@ -56,7 +56,7 @@ module.exports = (sequelize, DataTypes) => {
         type: DataTypes.STRING,
         validate: {
           notEmpty: {
-            message: 'Image cannot be null',
+            message: "Image cannot be null",
           },
         },
       },
@@ -64,8 +64,8 @@ module.exports = (sequelize, DataTypes) => {
     },
     {
       sequelize,
-      modelName: 'Subject',
+      modelName: "Item",
     }
   );
-  return Subject;
+  return Item;
 };

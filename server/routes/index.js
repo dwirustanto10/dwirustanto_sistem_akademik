@@ -1,16 +1,16 @@
-const { Router } = require('express');
+const { Router } = require("express");
 const route = Router();
 
-route.get('/', (req, res) => {
+route.get("/", (req, res) => {
   res.status(200).json({
-    message: 'Academic System Apps',
+    message: "Inventory Apps",
   });
 });
 
-const userRoutes = require('./user');
-const subjectRoutes = require('./subject');
+const userRoutes = require("./user");
+const itemRoutes = require("./item");
 
-route.use('/users', userRoutes);
-route.use('/subjects', subjectRoutes);
+route.use("/users", userRoutes);
+route.use("/items", itemRoutes);
 
 module.exports = route;
